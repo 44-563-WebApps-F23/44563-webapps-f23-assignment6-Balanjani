@@ -1,66 +1,92 @@
 <!DOCTYPE html>
 <html>
- <head>Author entry Balanjani</head>
- <title>Author</title>
+
+<head>Author entry Balanjani</head>
+<title>Author</title>
+<style>
+    /* CSS to style the image */
+    .image-container {
+        width: 100px;
+        height: 100px;
+        overflow: hidden;
+    }
+
+    .image-container img {
+        width: 100%;
+        height: auto;
+    }
+</style>
+
 <body>
 
-<h2>Getting input</h2>
+    <h2>Getting input</h2>
+    <p id="result">This text will be replaced </p>
 
-<form>
-    <label for="form1_age">What is your age </label>
-    <input type ="number" id="form1_age" name="form1_age" min=10 max=50 step=2 value=30> <br>
+    <script>
 
-    <label for="form1_nick">What is your nickname </label>
-    <input type ="text" id="form1_nick" name="form1_nick" autofocus> <br>
+        function resolveForm() {
+            console.log("Getting form values")
+            age = document.getElementById("form1_age").value
+            nick = document.getElementById("form1_nick").value
+            confirmed = confirm("Are these the values? " + age + " and " + nick)
 
-    <input type="button" onclick="resolveForm()" value="Get values from form">
-</form>
-
-
-<p id="result">This text will be replaced </p>
-
-<script> 
-
-function resolveForm (){
-    console.log("Getting form values")
-    age = document.getElementById("form1_age").value
-    nick = document.getElementById("form1_nick").value
-    confirmed = confirm("Are these the values? "+age+" and "+nick)
-    
-    out = document.getElementById("result")
-    if(confirmed){
-        out.innerHTML = "Values were confirmed"
-    } else {
-        out.innerHTML = "Values were not confirmed"
-    }
-}
-</script>
-<form id="authorForm">
-    <label for="secretAuthor">The hidden author name:</label>
-    <input type="password" id="secretAuthor" value="Dickens">
-    <label for="guessAuthor">Guess the author:</label>
-    <input type="text" id="guessAuthor">
-    <button type="button" onclick="checkAuthor()">Check the guess</button>
-    <p id="result"></p>
-</form>
-<script>
-    var good = 0;
-    var oops=0;
-    function checkAuthor(){
-        const secretAuthor = document.getElementById('secretAuthor').value;
-        const guessAuthor= document.getElementById('guessAuthor').value;
-        if(secretAuthor===guessAuthor)
-        {
-            good++;
-            alert('you got it right');
+            out = document.getElementById("result")
+            if (confirmed) {
+                out.innerHTML = "Values were confirmed"
+            } else {
+                out.innerHTML = "Values were not confirmed"
+            }
         }
-        else
-        {
-            oops++;
-            alert('sorry');
+    </script>
+    <form id="authorForm">
+        <label for="secretAuthor">The hidden author name:</label>
+        <input type="password" id="secretAuthor" value="Dickens">
+        <label for="guessAuthor">Guess the author:</label>
+        <input type="text" id="guessAuthor">
+        <button type="button" onclick="checkAuthor()">Check the guess</button>
+        <p id="result"></p>
+    </form>
+    <script>
+        var good = 0;
+        var oops = 0;
+        function checkAuthor() {
+            const secretAuthor = document.getElementById('secretAuthor').value;
+            const guessAuthor = document.getElementById('guessAuthor').value;
+            if (secretAuthor === guessAuthor) {
+                good++;
+                alert('you got it right');
+            }
+            else {
+                oops++;
+                alert('sorry');
+            }
+            document.getElementById('result').innerHTML = `right: ${good}, wrong: ${oops}`;
         }
-        document.getElementById('result').innerHTML = `right: ${good}, wrong: ${oops}`;
-    }
-</script>
+    </script>
+    <div class="image-container">
+        <img id="cityImage" src="Indore city.jpg" alt="City 1">
+    </div>
+    <script>     
+        let useImage = 1;
+        function selectImage() {          
+            switch (useImage) {
+                case 1:
+                    document.getElementById('cityImage').src = 'karachi.jpg';
+                    useImage = 2;
+                    break;
+                case 2:
+                    document.getElementById('cityImage').src = 'mysore_palace.jpg';
+                    useImage = 3;
+                    break;
+                case 3:
+                    document.getElementById('cityImage').src = 'Indore city.jpg';
+                    useImage = 1;
+                    break;
+                default:
+                    break;
+            }
+        }     
+        document.getElementById('cityImage').onclick = selectImage;
+    </script>
 </body>
-</html> 
+</html>
