@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html>
 
-<head>Author entry Balanjani</head>
+<head>Author entry Balanjani
 <title>Author</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
 <style>
-    /* CSS to style the image */
     .image-container {
         width: 100px;
         height: 100px;
@@ -16,11 +20,8 @@
         height: auto;
     }
 </style>
-
 <body>
-
-    <h2>Getting input</h2>
-    <p id="result">This text will be replaced </p>
+    <p id="result"></p>
 
     <script>
 
@@ -38,37 +39,53 @@
             }
         }
     </script>
-    <form id="authorForm">
+    <form id="authorForm" class="mt-4">
         <label for="secretAuthor">The hidden author name:</label>
-        <input type="password" id="secretAuthor" value="Dickens">
+        <input type="password" class="form-control" id="secretAuthor" value="Dickens">
         <label for="guessAuthor">Guess the author:</label>
-        <input type="text" id="guessAuthor">
-        <button type="button" onclick="checkAuthor()">Check the guess</button>
+        <input type="text" class="form-control" id="guessAuthor"><br>
+        <button type="button" class="btn btn-primary" onclick="checkAuthor()">Check the guess</button>
         <p id="result"></p>
+    </form>
+    <div class="alert alert-danger mt-3 d-none" id="incorrectGuesses"></div>
+    
     </form>
     <script>
         var good = 0;
         var oops = 0;
+    
         function checkAuthor() {
             const secretAuthor = document.getElementById('secretAuthor').value;
             const guessAuthor = document.getElementById('guessAuthor').value;
             if (secretAuthor === guessAuthor) {
                 good++;
-                alert('you got it right');
-            }
-            else {
+                alert('You got it right');
+            } else {
                 oops++;
-                alert('sorry');
+                alert('Sorry');
+                document.getElementById('incorrectGuesses').textContent = `Incorrect Guesses: ${oops}`;
+                document.getElementById('incorrectGuesses').classList.remove('d-none');
+                if (oops >= 7) {
+                    document.getElementById('result').innerHTML = '';
+                    document.getElementById('authorForm').innerHTML = `<button type="button" class="btn btn-danger" onclick="outOfGuesses()">Out of Guesses</button>`;
+                }
             }
-            document.getElementById('result').innerHTML = `right: ${good}, wrong: ${oops}`;
+            document.getElementById('result').innerHTML = `Right: ${good}, Wrong: ${oops}`;
+        }
+    
+        function outOfGuesses() {
+            alert('Sorry, ran out of guesses.');
         }
     </script>
-    <div class="image-container">
-        <img id="cityImage" src="Indore city.jpg" alt="City 1">
+    
+    <div class="image-container border mt-4">
+        <img id="cityImage" src="Indore city.jpg" alt="City 1" class="img-fluid">
     </div>
-    <script>     
+    
+    <script>
         let useImage = 1;
-        function selectImage() {          
+    
+        function selectImage() {
             switch (useImage) {
                 case 1:
                     document.getElementById('cityImage').src = 'karachi.jpg';
@@ -85,8 +102,10 @@
                 default:
                     break;
             }
-        }     
+        }
+    
         document.getElementById('cityImage').onclick = selectImage;
     </script>
+    
 </body>
 </html>
